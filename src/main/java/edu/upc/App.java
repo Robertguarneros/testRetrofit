@@ -35,6 +35,8 @@ public class App
         @GET("tracks/{id}")
         Call<Song> song1(@Path("id") String id);
 
+        @DELETE("tracks/{id}")
+        Call<Void> responseDelete(@Path("id")String id);
     }
 
     public static void main( String[] args ) throws IOException
@@ -63,11 +65,19 @@ public class App
         }
 
         //We will try to get only one song.
-        String songId = "Prueba1ID"; // Replace with the actual song ID you want to retrieve
+        String songId = "Z2050407322"; // Replace with the actual song ID you want to retrieve
         Call<Song> call1 = tracksInterface.song1(songId);
         Song songObtained = call1.execute().body();
         System.out.println("Getting song for ID: XRraT9\nSong ID: " + songObtained.id + "\nTitle: " + songObtained.title + "\nSinger: " + songObtained.singer + "\n");
+
+        //We will now try deleting a song
+        String deleteID = "Z2050407322";
+        Call<Void> call2 = tracksInterface.responseDelete(deleteID);
+        retrofit2.Response<Void> response = call2.execute();
+        if (response.code() == 201) {
+            System.out.println("The song with ID: " + deleteID + " has been deleted.\n");
+        } else {
+            System.out.println("Failed to delete the song. HTTP Status Code: " + response.code() + "\n");
+        }
     }
-
-
 }
