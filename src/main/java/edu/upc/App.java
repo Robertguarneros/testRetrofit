@@ -39,6 +39,9 @@ public class App {
 
         @POST("tracks")
         Call<Song> createSong(@Body Song song);
+
+        @PUT("tracks")
+        Call<Void> updateSong(@Body Song song);
     }
 
     public static void main(String[] args) throws IOException {
@@ -97,5 +100,18 @@ public class App {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        //We will now try to modify a song
+        Song songToModify = new Song("PruebaID","cambio","cambio");
+        Call<Void> call4 = tracksInterface.updateSong(songToModify);
+        retrofit2.Response<Void> response = call4.execute();
+        if (response.code() == 201) {
+            System.out.println("The song with ID: " + songToModify.id + " has been updated.\n");
+        } else {
+            System.out.println("Failed to delete the song. HTTP Status Code: " + response.code() + "\n");
+        }
+
+
     }
 }
