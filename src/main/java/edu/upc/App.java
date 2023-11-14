@@ -8,6 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -30,6 +31,10 @@ public class App
     public interface TracksInterface {
         @GET("tracks")
         Call<List<Song>> songs();
+
+        @GET("tracks/{id}")
+        Call<Song> song1(@Path("id") String id);
+
     }
 
     public static void main( String[] args ) throws IOException
@@ -56,5 +61,13 @@ public class App
         for (Song song : songs) {
             System.out.println("Song ID: "+song.id+"\nTitle: "+ song.title+"\nSinger: " + song.singer+"\n");
         }
+
+        //We will try to get only one song.
+        String songId = "Prueba1ID"; // Replace with the actual song ID you want to retrieve
+        Call<Song> call1 = tracksInterface.song1(songId);
+        Song songObtained = call1.execute().body();
+        System.out.println("Getting song for ID: XRraT9\nSong ID: " + songObtained.id + "\nTitle: " + songObtained.title + "\nSinger: " + songObtained.singer + "\n");
     }
+
+
 }
