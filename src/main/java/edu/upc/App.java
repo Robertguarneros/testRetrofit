@@ -111,7 +111,5 @@ public class App {
         } else {
             System.out.println("Failed to delete the song. HTTP Status Code: " + response.code() + "\n");
         }
-
-
     }
 }
